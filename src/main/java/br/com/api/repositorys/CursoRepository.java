@@ -1,9 +1,9 @@
-package com.lucas.repository;
+package br.com.api.repositorys;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.lucas.model.Curso;
+import br.com.api.models.Curso;
 
 @Repository
 public interface CursoRepository extends JpaRepository<Curso, Long> {}

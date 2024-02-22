@@ -1,4 +1,4 @@
-package com.lucas.model;
+package br.com.api.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,13 +14,13 @@ import lombok.Data;
 public class Curso {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nm_curso", length = 200, nullable = false)
+    @Column(name = "nm_curso")
     private String nome;
 
-    @Column(name = "ctg_curso", length = 10, nullable = false)
+    @Column(name = "ctg_curso")
     private String categoria;
 
 }
