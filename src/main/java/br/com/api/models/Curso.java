@@ -1,5 +1,7 @@
 package br.com.api.models;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 import org.hibernate.validator.constraints.Length;
 
 import jakarta.persistence.Column;
@@ -16,6 +18,8 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "tb_curso")
+@SQLDelete(sql = "UPDATE tb_curso SET status = 'Inativo' WHERE id = ?")
+@SQLRestriction("status = 'Ativo'")
 public class Curso {
 
     @Id
@@ -33,5 +37,11 @@ public class Curso {
     @Pattern(regexp = "Back-End|Front-End")
     @Column(length = 10, nullable = false)
     private String categoria;
+
+    @NotNull()
+    @Length(max = 10)
+    @Pattern(regexp = "Ativo|Inativo")
+    @Column(length = 10, nullable = false)
+    private String status = "Ativo";
 
 }
