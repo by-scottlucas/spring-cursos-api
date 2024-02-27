@@ -43,11 +43,11 @@ public class CursoService {
                 .orElseThrow(() -> new NotFoundException(id));
     }
 
-    public CursoDTO update(@NotNull @Positive Long id, @Valid @NotNull CursoDTO curso) {
+    public CursoDTO update(@NotNull @Positive Long id, @Valid @NotNull CursoDTO cursoDTO) {
         return cursoRepository.findById(id)
                 .map(response -> {
-                    response.setNome(curso.nome());
-                    response.setCategoria(cursoMapper.convertCategoria(curso.categoria()));
+                    response.setNome(cursoDTO.nome());
+                    response.setCategoria(cursoMapper.convertCategoria(cursoDTO.categoria()));
                     return cursoMapper.toDTO(cursoRepository.save(response));
                 }).orElseThrow(() -> new NotFoundException(id));
     }

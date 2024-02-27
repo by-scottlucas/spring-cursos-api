@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import br.com.api.dto.AulaDTO;
 import br.com.api.dto.CursoDTO;
 import br.com.api.enums.Categoria;
+import br.com.api.model.Aula;
 import br.com.api.model.Curso;
 
 @Component
@@ -42,6 +43,16 @@ public class CursoMapper {
         }
         curso.setNome(cursoDTO.nome());
         curso.setCategoria(convertCategoria(cursoDTO.categoria()));
+
+        List<Aula> aulas = cursoDTO.aulas().stream().map(aulaDTO -> {
+            var aula = new Aula();
+            aula.setId(aulaDTO.id());
+            aula.setNome(aulaDTO.nome());
+            aula.setUrl(aulaDTO.url());
+            return aula;
+        }).collect(Collectors.toList());
+        curso.setAulas(aulas);
+
         return curso;
     }
 
