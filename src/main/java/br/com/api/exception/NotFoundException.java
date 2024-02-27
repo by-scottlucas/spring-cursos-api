@@ -1,4 +1,4 @@
-package br.com.api.exceptions;
+package br.com.api.exception;
 
 public class NotFoundException extends RuntimeException {
 

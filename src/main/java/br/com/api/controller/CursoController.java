@@ -1,4 +1,4 @@
-package br.com.api.controllers;
+package br.com.api.controller;
 
 import java.util.List;
 
@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.api.models.Curso;
-import br.com.api.services.CursoService;
+import br.com.api.dto.CursoDTO;
+import br.com.api.service.CursoService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -32,23 +32,23 @@ public class CursoController {
     private CursoService cursoService;
 
     @GetMapping()
-    public List<Curso> list() {
+    public List<CursoDTO> list() {
         return cursoService.list();
     }
 
     @PostMapping()
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Curso create(@RequestBody @Valid Curso curso) {
+    public CursoDTO create(@RequestBody @Valid CursoDTO curso) {
         return cursoService.create(curso);
     }
 
     @GetMapping("/{id}")
-    public Curso read(@PathVariable @NotNull @Positive Long id) {
+    public CursoDTO read(@PathVariable @NotNull @Positive Long id) {
         return cursoService.read(id);
     }
 
     @PutMapping("/{id}")
-    public Curso update(@PathVariable @NotNull @Positive Long id, @RequestBody @Valid Curso curso) {
+    public CursoDTO update(@PathVariable @NotNull @Positive Long id, @RequestBody @Valid @NotNull CursoDTO curso) {
         return cursoService.update(id, curso);
     }
 

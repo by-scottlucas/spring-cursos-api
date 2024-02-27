@@ -1,4 +1,4 @@
-package br.com.api.models;
+package br.com.api.model;
 
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
