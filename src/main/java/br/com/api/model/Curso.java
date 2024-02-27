@@ -1,18 +1,27 @@
 package br.com.api.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 import org.hibernate.validator.constraints.Length;
 
+import br.com.api.enums.Categoria;
+import br.com.api.enums.Status;
+import br.com.api.enums.converters.CategoriaConverter;
+import br.com.api.enums.converters.StatusConverter;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 @Data
@@ -33,15 +42,16 @@ public class Curso {
     private String nome;
 
     @NotNull()
-    @Length(max = 10)
-    @Pattern(regexp = "Back-End|Front-End")
     @Column(length = 10, nullable = false)
-    private String categoria;
+    @Convert(converter = CategoriaConverter.class)
+    private Categoria categoria;
 
     @NotNull()
-    @Length(max = 10)
-    @Pattern(regexp = "Ativo|Inativo")
     @Column(length = 10, nullable = false)
-    private String status = "Ativo";
+    @Convert(converter = StatusConverter.class)
+    private Status status = Status.ATIVO;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Aula> aulas = new ArrayList<>();
 
 }

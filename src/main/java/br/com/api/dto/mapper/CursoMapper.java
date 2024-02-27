@@ -1,8 +1,13 @@
 package br.com.api.dto.mapper;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Component;
 
+import br.com.api.dto.AulaDTO;
 import br.com.api.dto.CursoDTO;
+import br.com.api.enums.Categoria;
 import br.com.api.model.Curso;
 
 @Component
@@ -13,7 +18,16 @@ public class CursoMapper {
             return null;
         }
 
-        return new CursoDTO(curso.getId(), curso.getNome(), curso.getCategoria());
+        List<AulaDTO> aulas = curso.getAulas()
+                .stream()
+                .map(aula -> new AulaDTO(aula.getId(), aula.getNome(), aula.getUrl()))
+                .collect(Collectors.toList());
+
+        return new CursoDTO(
+                curso.getId(),
+                curso.getNome(),
+                curso.getCategoria().getValue(),
+                aulas);
     }
 
     public Curso toEntity(CursoDTO cursoDTO) {
@@ -27,9 +41,21 @@ public class CursoMapper {
             curso.setId(cursoDTO.id());
         }
         curso.setNome(cursoDTO.nome());
-        curso.setCategoria(cursoDTO.categoria());
-        curso.setStatus("Ativo");
+        curso.setCategoria(convertCategoria(cursoDTO.categoria()));
         return curso;
+    }
+
+    public Categoria convertCategoria(String value) {
+        if (value == null) {
+            return null;
+        }
+
+        return switch (value) {
+            case "Front-End" -> Categoria.FRONTEND;
+            case "Back-End" -> Categoria.BACKEND;
+            default -> throw new IllegalArgumentException("Categoria inválida: " + value);
+        };
+
     }
 
 }
