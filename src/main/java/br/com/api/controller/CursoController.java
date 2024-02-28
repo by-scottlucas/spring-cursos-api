@@ -35,14 +35,10 @@ public class CursoController {
 
     @GetMapping()
     public CursoPageDTO list(
-            @RequestParam(defaultValue = "0") @PositiveOrZero int Page,
+            @RequestParam(defaultValue = "0") @PositiveOrZero int pageIndex,
             @RequestParam(defaultValue = "10") @Positive @Max(100) int pageSize) {
-        return cursoService.list(pageSize, pageSize);
+        return cursoService.list(pageIndex, pageSize);
     }
-    // @GetMapping()
-    // public List<CursoDTO> list() {
-    // return cursoService.list();
-    // }
 
     @PostMapping()
     @ResponseStatus(code = HttpStatus.CREATED)

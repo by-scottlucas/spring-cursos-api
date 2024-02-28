@@ -56,7 +56,6 @@ public class Curso {
     @NotNull
     @NotEmpty
     @Valid
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    // @JoinColumn(name = "curso_id")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "curso")
     private List<Aula> aulas = new ArrayList<>();
 }

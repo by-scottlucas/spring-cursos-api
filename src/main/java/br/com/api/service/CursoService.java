@@ -32,16 +32,8 @@ public class CursoService {
         this.cursoMapper = cursoMapper;
     }
 
-    // public List<CursoDTO> list() {
-
-    // return cursoRepository.findAll()
-    // .stream()
-    // .map(cursoMapper::toDTO)
-    // .collect(Collectors.toList());
-    // }
-
-    public CursoPageDTO list(@PositiveOrZero int page, @Positive @Max(100) int size) {
-        Page<Curso> cursoPage = cursoRepository.findAll(PageRequest.of(page, size));
+    public CursoPageDTO list(@PositiveOrZero int pageIndex, @Positive @Max(100) int pageSize) {
+        Page<Curso> cursoPage = cursoRepository.findAll(PageRequest.of(pageIndex, pageSize));
         List<CursoDTO> cursos = cursoPage.get().map(cursoMapper::toDTO).collect(Collectors.toList());
         return new CursoPageDTO(cursos, cursoPage.getTotalElements(), cursoPage.getTotalPages());
     }
