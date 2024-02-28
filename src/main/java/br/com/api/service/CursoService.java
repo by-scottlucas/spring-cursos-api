@@ -3,17 +3,22 @@ package br.com.api.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import br.com.api.dto.CursoDTO;
+import br.com.api.dto.CursoPageDTO;
 import br.com.api.dto.mapper.CursoMapper;
 import br.com.api.exception.NotFoundException;
 import br.com.api.model.Curso;
 import br.com.api.repository.CursoRepository;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 
 @Validated
 @Service
@@ -27,11 +32,18 @@ public class CursoService {
         this.cursoMapper = cursoMapper;
     }
 
-    public List<CursoDTO> list() {
-        return cursoRepository.findAll()
-                .stream()
-                .map(cursoMapper::toDTO)
-                .collect(Collectors.toList());
+    // public List<CursoDTO> list() {
+
+    // return cursoRepository.findAll()
+    // .stream()
+    // .map(cursoMapper::toDTO)
+    // .collect(Collectors.toList());
+    // }
+
+    public CursoPageDTO list(@PositiveOrZero int page, @Positive @Max(100) int size) {
+        Page<Curso> cursoPage = cursoRepository.findAll(PageRequest.of(page, size));
+        List<CursoDTO> cursos = cursoPage.get().map(cursoMapper::toDTO).collect(Collectors.toList());
+        return new CursoPageDTO(cursos, cursoPage.getTotalElements(), cursoPage.getTotalPages());
     }
 
     public CursoDTO create(@Valid CursoDTO curso) {
