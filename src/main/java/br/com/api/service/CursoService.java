@@ -9,6 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import br.com.api.dto.CursoDTO;
 import br.com.api.dto.mapper.CursoMapper;
 import br.com.api.exception.NotFoundException;
+import br.com.api.model.Curso;
 import br.com.api.repository.CursoRepository;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -46,8 +47,12 @@ public class CursoService {
     public CursoDTO update(@NotNull @Positive Long id, @Valid @NotNull CursoDTO cursoDTO) {
         return cursoRepository.findById(id)
                 .map(response -> {
+                    Curso curso = cursoMapper.toEntity(cursoDTO);
                     response.setNome(cursoDTO.nome());
                     response.setCategoria(cursoMapper.convertCategoria(cursoDTO.categoria()));
+                    // response.setAulas(curso.getAulas());
+                    response.getAulas().clear();
+                    curso.getAulas().forEach(response.getAulas()::add);
                     return cursoMapper.toDTO(cursoRepository.save(response));
                 }).orElseThrow(() -> new NotFoundException(id));
     }
