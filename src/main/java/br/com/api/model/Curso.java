@@ -9,8 +9,8 @@ import org.hibernate.validator.constraints.Length;
 
 import br.com.api.enums.Categoria;
 import br.com.api.enums.Status;
-import br.com.api.enums.converters.CategoriaConverter;
-import br.com.api.enums.converters.StatusConverter;
+import br.com.api.enums.converter.CategoriaConverter;
+import br.com.api.enums.converter.StatusConverter;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;

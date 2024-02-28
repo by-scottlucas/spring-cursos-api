@@ -1,16 +1,16 @@
-package br.com.api.enums.converters;
+package br.com.api.enums.converter;
 
 import java.util.stream.Stream;
 
-import br.com.api.enums.Status;
+import br.com.api.enums.Categoria;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
 @Converter(autoApply = true)
-public class StatusConverter implements AttributeConverter<Status, String> {
+public class CategoriaConverter implements AttributeConverter<Categoria, String> {
 
     @Override
-    public String convertToDatabaseColumn(Status categoria) {
+    public String convertToDatabaseColumn(Categoria categoria) {
         if (categoria == null) {
             return null;
         }
@@ -18,12 +18,12 @@ public class StatusConverter implements AttributeConverter<Status, String> {
     }
 
     @Override
-    public Status convertToEntityAttribute(String value) {
+    public Categoria convertToEntityAttribute(String value) {
         if (value == null) {
             return null;
         }
 
-        return Stream.of(Status.values())
+        return Stream.of(Categoria.values())
                 .filter(c -> c.getValue().equals(value))
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
