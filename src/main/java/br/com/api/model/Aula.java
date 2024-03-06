@@ -22,23 +22,23 @@ import lombok.Data;
 @Table(name = "tb_aula")
 public class Aula {
 
-    @Id
+    @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @NotBlank
+    @NotNull()
+    @NotBlank()
     @Length(min = 5, max = 100)
     @Column(length = 100, nullable = false)
     private String nome;
 
-    @NotNull
-    @NotBlank
+    @NotNull()
+    @NotBlank()
     @Length(min = 5, max = 100)
     @Column(length = 11, nullable = false)
     private String url;
 
-    @NotNull
+    @NotNull()
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "curso_id", nullable = false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

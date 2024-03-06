@@ -33,7 +33,7 @@ import lombok.Data;
 @SQLRestriction("status = 'Ativo'")
 public class Curso {
 
-    @Id
+    @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -53,9 +53,9 @@ public class Curso {
     @Convert(converter = StatusConverter.class)
     private Status status = Status.ATIVO;
 
-    @NotNull
-    @NotEmpty
-    @Valid
+    @NotNull()
+    @NotEmpty()
+    @Valid()
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "curso")
     private List<Aula> aulas = new ArrayList<>();
 }
